@@ -33,3 +33,20 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog_detail.html', kwargs=({'slug': self.slug}))
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=80)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_on']
+
+    def __str__(self):
+        return f'Comment {self.content} by {self.name}'
+
+
