@@ -1,8 +1,9 @@
 from django.views.generic import ListView
-from .forms import CommentForm
+from .forms import CommentForm, BlogForm
 from .models import Post
 from django.shortcuts import render, get_object_or_404
-# Create your views here.
+from django.http import HttpResponse
+
 
 
 class BlogList(ListView):
@@ -32,3 +33,18 @@ def blog_detail(request, slug):
         'comment_form': comment_form
     }
     return render(request, 'blog_detail.html', context)
+
+
+
+def CreateBlogPost(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('New blog successfully added!')
+    else:
+        form = BlogForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'create_blog.html', context)

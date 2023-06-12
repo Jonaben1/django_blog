@@ -1,8 +1,9 @@
-from .views import PostList, blog_detail
+from .views import BlogList, blog_detail, CreateBlogPost
 from django.urls import path
 
 
 urlpatterns = [
-    path('', PostList.as_view(), name='home'),
+    path('', BlogList.as_view(), name='home'),
     path('<slug:slug>/', blog_detail, name='blog_detail'),
+    path('ckeditor/new_post/', CreateBlogPost, name='create'),
 ]
