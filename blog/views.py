@@ -9,7 +9,7 @@ from django.http import HttpResponse
 class BlogList(ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
-
+    paginate_by = 2
 
 def blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)

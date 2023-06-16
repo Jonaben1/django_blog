@@ -21,4 +21,23 @@
         {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
+
+
+{% if is_paginated %}
+  <nav aria-label="Page navigation conatiner"></nav>
+  <ul class="pagination justify-content-center">
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+</ul>
+  </nav>
+</div>
+{% endif %}
+
+
+
 {% endblock %}
