@@ -46,7 +46,15 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'ckeditor',
+
+    # sitemaps
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+SITE_ID = 1
+
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [

@@ -1,15 +1,20 @@
 from django.views.generic import ListView
-from .forms import CommentForm, BlogForm
+from .forms import CommentForm, BlogForm, ContactForm
 from .models import Post
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import CreateView
 
 
 class BlogList(ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
     paginate_by = 2
+
+
 
 def blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -48,3 +53,19 @@ def CreateBlogPost(request):
             'form': form
         }
         return render(request, 'create_blog.html', context)
+
+
+
+class ContactView(SuccessMessageMixin, CreateView):
+    form_class = ContactForm
+    success_url = reverse_lazy('index')
+    template_name = 'contact.html'
+    success_message = 'Your message was submitted successfully'
+
+    def form_invalid(self, form):
+        message.error(self.request, 'An unknown error has occurred!')
+        return HttpResponseRedirect('')
+
+
+def about(request):
+    return render(request, 'about.html')
